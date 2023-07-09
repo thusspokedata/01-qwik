@@ -8,10 +8,20 @@ export default component$(() => {
     <>
       <span class="text-2xl">Buscador simple</span>
       <span class="text-9xl">{pokemonId}</span>
-      
+      <img
+        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId.value}.png`}
+        width="196"
+        height="196"
+        alt=""
+      />
+
       <div class="mt-2">
-        <button class="btn btn-primary mx-1">Anterior</button>
-        <button class="btn btn-primary mx-1">Siguientes</button>
+        <button onClick$={() => pokemonId.value > 1 && pokemonId.value--} class="btn btn-primary mx-1">
+          Anterior
+        </button>
+        <button onClick$={() => pokemonId.value++} class="btn btn-primary mx-1">
+          Siguientes
+        </button>
       </div>
     </>
   );
