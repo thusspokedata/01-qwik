@@ -1,25 +1,30 @@
 import { $, component$, useSignal } from '@builder.io/qwik';
-import type { DocumentHead } from '@builder.io/qwik-city';
+import { type DocumentHead, useNavigate } from '@builder.io/qwik-city';
 import { PokemonImage } from '~/components/pokemons/pokemon-image';
 
 export default component$(() => {
+  // The useNavigate() function allows to programmatically navigate to the next page without involving a user click or causing a full-page reload.
+  const nav = useNavigate();
   const pokemonId = useSignal<number>(10); // primitivos, strings booleans
-  // const pokemonStore = useStore() // arrays, objects
   const showBackImage = useSignal<boolean>(false);
   const showImage = useSignal<boolean>(false);
-  // const showBackImage =$((value: boolen) {
-
-  // }
+ 
   const changePokemonId = $((value: number) => {
     if (pokemonId.value + value <= 0) return;
     pokemonId.value += value;
+  });
+
+  const goToPokemon = $(() => {
+    nav(`/pokemon/${pokemonId.value}/`);
   });
   return (
     <>
       <span class="text-2xl">Buscador simple</span>
       <span class="text-9xl">{pokemonId}</span>
 
-      <PokemonImage id={pokemonId.value} size={'196'} backImage={showBackImage.value} isVisible={showImage.value} />
+      <button onClick$={() => goToPokemon()}>
+        <PokemonImage id={pokemonId.value} size={'196'} backImage={showBackImage.value} isVisible={showImage.value} />
+      </button>
 
       <div class="mt-2">
         <button onClick$={() => changePokemonId(-1)} class="btn btn-primary mx-1">
